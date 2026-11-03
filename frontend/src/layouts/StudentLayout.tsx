@@ -1,13 +1,14 @@
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { LayoutDashboard, ClipboardList, ScanFace, LogOut, Scan } from 'lucide-react'
+import { LayoutDashboard, CalendarDays, ClipboardList, ScanFace, LogOut, Scan } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import clsx from 'clsx'
 
 const nav = [
   { label: 'Dashboard',   path: '/student',            icon: LayoutDashboard },
-  { label: 'Attendance',  path: '/student/attendance', icon: ClipboardList },
+  { label: 'Timetable',   path: '/student/timetable',  icon: CalendarDays },
   { label: 'Verify Face', path: '/student/verify',     icon: ScanFace },
+  { label: 'Attendance',  path: '/student/attendance', icon: ClipboardList },
 ]
 
 export default function StudentLayout() {

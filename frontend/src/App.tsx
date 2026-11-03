@@ -13,6 +13,7 @@ const TimetablePage    = lazy(() => import('./pages/admin/TimetablePage'))
 const AttendancePage   = lazy(() => import('./pages/admin/AttendancePage'))
 const ReportsPage      = lazy(() => import('./pages/admin/ReportsPage'))
 const StudentDashboard = lazy(() => import('./pages/student/StudentDashboard'))
+const StudentTimetablePage = lazy(() => import('./pages/student/StudentTimetablePage'))
 const StudentAttendance = lazy(() => import('./pages/student/StudentAttendance'))
 const VerifyPage       = lazy(() => import('./pages/student/VerifyPage'))
 
@@ -55,6 +56,7 @@ export default function App() {
           {/* Student routes */}
           <Route path="/student" element={<ProtectedRoute role="STUDENT"><StudentLayout /></ProtectedRoute>}>
             <Route index element={<StudentDashboard />} />
+            <Route path="timetable" element={<StudentTimetablePage />} />
             <Route path="attendance" element={<StudentAttendance />} />
             <Route path="verify" element={<VerifyPage />} />
           </Route>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -194,13 +194,15 @@ export default function LoginPage() {
   const [showPwd, setShowPwd]   = useState(false)
   const [error, setError]       = useState('')
   const [loading, setLoading]   = useState(false)
-  const { login, user }         = useAuth()
+  const { login, user, isLoading } = useAuth()
   const navigate                = useNavigate()
 
-  // Redirect if already authenticated
-  if (user) {
-    navigate(user.role === 'ADMIN' ? '/admin' : '/student', { replace: true })
-  }
+  // Redirect if already authenticated once auth state is verified
+  useEffect(() => {
+    if (!isLoading && user) {
+      navigate(user.role === 'ADMIN' ? '/admin' : '/student', { replace: true })
+    }
+  }, [user, isLoading, navigate])
 
   const handleRoleChange = (role: 'STUDENT' | 'ADMIN') => {
     setRoleMode(role)
@@ -227,6 +229,17 @@ export default function LoginPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#0090e7] flex items-center justify-center font-sans">
+        <div className="flex items-center gap-3 text-white">
+          <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          <span className="text-sm font-bold tracking-wide">Connecting to FaceAttend Portal...</span>
+        </div>
+      </div>
+    )
   }
 
   return (

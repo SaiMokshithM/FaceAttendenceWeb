@@ -15,6 +15,7 @@ import {
 import { Link } from 'react-router-dom'
 import { studentService, enrollmentService } from '../../services/endpoints'
 import api from '../../services/api'
+import StudentWeeklyTimetable from './StudentWeeklyTimetable'
 
 interface AttendanceHistoryItem {
   id: string
@@ -231,6 +232,12 @@ export default function StudentDashboard() {
           </motion.div>
         ))}
       </div>
+
+      {/* ── Full Weekly Timetable (Premium Interactive Experience) ── */}
+      <StudentWeeklyTimetable
+        attendanceHistory={history}
+        subjectStats={subjectBreakdown}
+      />
 
       {/* ── Subject-wise Attendance Breakdown ── */}
       <div className="bg-white p-6 sm:p-7 rounded-[28px] border border-slate-200/80 shadow-[0_6px_30px_rgba(0,0,0,0.04)] space-y-5">
