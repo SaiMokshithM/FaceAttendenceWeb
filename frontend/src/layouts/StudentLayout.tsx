@@ -21,7 +21,7 @@ export default function StudentLayout() {
       <header className="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-20 shadow-xs">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+            <div className="w-8 h-8 rounded-xl bg-[#0090e7] flex items-center justify-center text-white shadow-md shadow-sky-500/25">
               <Scan className="w-4 h-4" />
             </div>
             <div>
@@ -40,7 +40,7 @@ export default function StudentLayout() {
                 className={({ isActive }) => clsx(
                   'flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all',
                   isActive
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25'
+                    ? 'bg-[#0090e7] text-white shadow-md shadow-sky-500/30'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 )}
               >
@@ -88,10 +88,10 @@ export default function StudentLayout() {
                 to={path}
                 className="flex flex-col items-center -mt-5"
               >
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/35 border-2 border-white scale-105 active:scale-95 transition">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#0070ba] to-[#0090e7] text-white flex items-center justify-center shadow-lg shadow-sky-500/35 border-2 border-white scale-105 active:scale-95 transition">
                   <ScanFace className="w-6 h-6" />
                 </div>
-                <span className="text-[10px] font-black text-blue-600 mt-1">Scan Face</span>
+                <span className="text-[10px] font-black text-[#0090e7] mt-1">Scan Face</span>
               </NavLink>
             )
           }
@@ -103,12 +103,12 @@ export default function StudentLayout() {
               end={path === '/student'}
               className={clsx(
                 'flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-bold transition-all',
-                active ? 'text-blue-600 font-black' : 'text-gray-500 hover:text-gray-800'
+                active ? 'text-[#0090e7] font-black' : 'text-gray-500 hover:text-gray-800'
               )}
             >
               <div className={clsx(
                 'w-8 h-8 rounded-xl flex items-center justify-center transition-all',
-                active ? 'bg-blue-50 text-blue-600' : 'text-gray-500'
+                active ? 'bg-[#0090e7]/10 text-[#0090e7]' : 'text-gray-500'
               )}>
                 <Icon className="w-4 h-4" />
               </div>

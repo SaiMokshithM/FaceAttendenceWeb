@@ -1,6 +1,19 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Users, UserCheck, Clock, ScanFace, Calendar, FileText, CheckCircle2, XCircle, ChevronRight, RefreshCw } from 'lucide-react'
+import {
+  Users,
+  Clock,
+  ScanFace,
+  Calendar,
+  FileText,
+  CheckCircle2,
+  XCircle,
+  ChevronRight,
+  RefreshCw,
+  Sparkles,
+  ShieldCheck,
+  TrendingUp,
+} from 'lucide-react'
 import { Link } from 'react-router-dom'
 import api from '../../services/api'
 
@@ -47,7 +60,11 @@ export default function AdminDashboard() {
 
   const istTime = clock.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour12: true })
   const istDate = clock.toLocaleDateString('en-IN', {
-    timeZone: 'Asia/Kolkata', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    timeZone: 'Asia/Kolkata',
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   })
 
   // Aggregate today's stats
@@ -57,113 +74,199 @@ export default function AdminDashboard() {
   const todayPct = activePeriod?.attendancePercentage || 0
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto p-2">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-black text-gray-900 tracking-tight">Admin Master Dashboard</h1>
-          <p className="text-xs text-gray-500 mt-1">
-            Real-time biometric attendance oversight • CSM Section F (MR University, Tirupati)
-          </p>
-        </div>
-        <div className="text-right">
-          <p className="text-sm font-bold text-gray-800">{istTime}</p>
-          <p className="text-[11px] text-gray-500">{istDate}</p>
-        </div>
-      </div>
+    <div className="space-y-6 max-w-7xl mx-auto p-2 sm:p-4 font-sans">
+      {/* ── Top Institutional Hero Banner (Premium Blue Matching Login) ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative overflow-hidden rounded-[28px] bg-gradient-to-r from-[#0070ba] via-[#0090e7] to-[#0284c7] text-white p-6 sm:p-8 shadow-[0_16px_48px_rgba(0,144,231,0.22)]"
+      >
+        {/* Background Subtle Biometric Dot Matrix Pattern */}
+        <div className="absolute inset-0 pointer-events-none opacity-15 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px]" />
+        <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none" />
 
-      {/* KPI Cards */}
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="flex items-start sm:items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center flex-shrink-0 shadow-lg">
+              <ScanFace className="w-7 h-7 text-white" />
+            </div>
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-[11px] font-semibold text-white/95 mb-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>CSM Section F • Automated Biometric Hub</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+                Admin Master Dashboard
+              </h1>
+              <p className="text-xs sm:text-sm text-white/80 mt-1 max-w-xl">
+                Malla Reddy University (Off Campus Tirupati) • Real-time SFace Biometrics & Attendance Command Center
+              </p>
+            </div>
+          </div>
+
+          {/* Real-time Clock & Sync Pill */}
+          <div className="flex md:flex-col items-center md:items-end justify-between gap-2 bg-white/15 backdrop-blur-md border border-white/25 rounded-2xl p-3.5 sm:px-5">
+            <div className="text-right">
+              <div className="text-lg sm:text-xl font-black text-white font-mono tracking-tight">{istTime}</div>
+              <div className="text-[11px] text-white/80">{istDate}</div>
+            </div>
+            <button
+              onClick={fetchOverview}
+              title="Refresh Data"
+              className="p-1.5 rounded-xl bg-white/20 hover:bg-white/30 transition text-white active:scale-95 flex items-center gap-1.5 text-xs font-semibold px-2.5"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+              <span className="hidden sm:inline">Sync</span>
+            </button>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ── KPI Metrics Cards (Sleek Clean Cards with Micro-Glow) ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-          className="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm">
+        {/* Enrolled Students */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white p-5 rounded-[24px] border border-slate-200/80 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,144,231,0.1)] transition-all group"
+        >
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold text-gray-500">Enrolled Students</p>
-            <Users className="w-5 h-5 text-blue-600" />
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Enrolled Roster</span>
+            <div className="w-10 h-10 rounded-xl bg-[#0090e7]/10 text-[#0090e7] flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Users className="w-5 h-5" />
+            </div>
           </div>
-          <p className="text-3xl font-black text-gray-900 mt-2">{totalStudents}</p>
-          <p className="text-[11px] text-emerald-600 font-semibold mt-1">✓ 100% SFace Embeddings Active</p>
+          <p className="text-3xl font-black text-slate-800 mt-2.5 tracking-tight">{totalStudents}</p>
+          <div className="flex items-center gap-1.5 text-[11px] text-emerald-600 font-semibold mt-2">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>100% SFace Embeddings Active</span>
+          </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-          className="bg-white p-5 rounded-3xl border border-emerald-200 bg-emerald-50/40 shadow-sm">
+        {/* Active Period Present */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="bg-white p-5 rounded-[24px] border border-emerald-200/80 bg-gradient-to-br from-white to-emerald-50/30 shadow-[0_4px_24px_rgba(16,185,129,0.06)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.12)] transition-all group"
+        >
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold text-emerald-800">Active Period Present</p>
-            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+            <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider">Period Present</span>
+            <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <CheckCircle2 className="w-5 h-5" />
+            </div>
           </div>
-          <p className="text-3xl font-black text-emerald-700 mt-2">{todayPresent}</p>
-          <p className="text-[11px] text-emerald-600 font-semibold mt-1">{todayPct}% Biometric Turnout</p>
+          <p className="text-3xl font-black text-emerald-600 mt-2.5 tracking-tight">{todayPresent}</p>
+          <div className="flex items-center gap-1.5 text-[11px] text-emerald-600 font-semibold mt-2">
+            <TrendingUp className="w-3.5 h-3.5" />
+            <span>{todayPct}% Biometric Turnout</span>
+          </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="bg-white p-5 rounded-3xl border border-rose-200 bg-rose-50/40 shadow-sm">
+        {/* Active Period Absent */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="bg-white p-5 rounded-[24px] border border-rose-200/80 bg-gradient-to-br from-white to-rose-50/30 shadow-[0_4px_24px_rgba(244,63,94,0.06)] hover:shadow-[0_8px_32px_rgba(244,63,94,0.12)] transition-all group"
+        >
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold text-rose-800">Active Period Absent</p>
-            <XCircle className="w-5 h-5 text-rose-600" />
+            <span className="text-xs font-bold text-rose-700 uppercase tracking-wider">Period Absent</span>
+            <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <XCircle className="w-5 h-5" />
+            </div>
           </div>
-          <p className="text-3xl font-black text-rose-700 mt-2">{todayAbsent}</p>
-          <p className="text-[11px] text-rose-600 font-semibold mt-1">Pending Check-in</p>
+          <p className="text-3xl font-black text-rose-600 mt-2.5 tracking-tight">{todayAbsent}</p>
+          <p className="text-[11px] text-rose-600 font-semibold mt-2">Pending Biometric Verification</p>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-          className="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm">
+        {/* Scheduled Periods */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="bg-white p-5 rounded-[24px] border border-slate-200/80 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,144,231,0.1)] transition-all group"
+        >
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold text-gray-500">Scheduled Periods</p>
-            <Calendar className="w-5 h-5 text-indigo-600" />
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Scheduled Periods</span>
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Calendar className="w-5 h-5" />
+            </div>
           </div>
-          <p className="text-3xl font-black text-indigo-700 mt-2">{periods.length || 6}</p>
-          <p className="text-[11px] text-gray-500 font-semibold mt-1">09:20 AM - 03:40 PM</p>
+          <p className="text-3xl font-black text-indigo-700 mt-2.5 tracking-tight">{periods.length || 6}</p>
+          <p className="text-[11px] text-slate-500 font-semibold mt-2">09:20 AM – 03:40 PM IST</p>
         </motion.div>
       </div>
 
-      {/* Today's Period-wise Attendance Report Snapshot */}
-      <div className="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm space-y-4">
-        <div className="flex items-center justify-between">
+      {/* ── Today's Period-wise Attendance Report Snapshot ── */}
+      <div className="bg-white rounded-[28px] border border-slate-200/80 p-6 sm:p-7 shadow-[0_6px_30px_rgba(0,0,0,0.04)] space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
-              <Clock className="w-5 h-5 text-blue-600" /> Today's Live Period Breakdown
-            </h2>
-            <p className="text-xs text-gray-500 mt-0.5">
-              Individual Present vs Absent headcount for every period of the day
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-xl bg-[#0090e7]/10 text-[#0090e7] flex items-center justify-center">
+                <Clock className="w-4 h-4" />
+              </div>
+              <h2 className="text-lg font-extrabold text-slate-800 tracking-tight">
+                Today's Live Period Breakdown
+              </h2>
+            </div>
+            <p className="text-xs text-slate-500 mt-1 ml-10">
+              Individual present and absent headcount across all 6 lecture periods
             </p>
           </div>
           <Link
             to="/admin/attendance"
-            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#0090e7]/10 hover:bg-[#0090e7]/20 text-[#0090e7] text-xs font-bold transition-colors active:scale-95"
           >
-            Detailed View <ChevronRight className="w-4 h-4" />
+            <span>Detailed Period View</span>
+            <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
 
         {loading ? (
-          <div className="py-12 text-center text-gray-400">
-            <div className="w-6 h-6 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-            <p className="text-xs">Loading periods...</p>
+          <div className="py-14 text-center text-slate-400">
+            <div className="w-7 h-7 border-3 border-[#0090e7] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+            <p className="text-xs font-medium">Loading live period streams…</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {periods.map(p => (
               <div
                 key={p.periodNumber}
-                className="p-4 rounded-2xl border border-gray-200 bg-gray-50/60 hover:bg-gray-50 transition space-y-2.5"
+                className="p-5 rounded-2xl border border-slate-200/80 bg-slate-50/50 hover:bg-white hover:border-[#0090e7]/40 hover:shadow-md transition-all space-y-3"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-xs px-2 py-0.5 bg-blue-100 text-blue-800 rounded-lg">
+                  <span className="font-extrabold text-[11px] px-2.5 py-0.5 bg-[#0090e7] text-white rounded-lg shadow-sm">
                     Period {p.periodNumber}
                   </span>
-                  <span className="font-mono text-[10px] text-gray-500">{p.timing}</span>
+                  <span className="font-mono text-[11px] text-slate-500 font-semibold">{p.timing}</span>
                 </div>
                 <div>
-                  <p className="font-bold text-sm text-gray-900 truncate">{p.subjectName}</p>
-                  <p className="text-[11px] text-gray-500">{p.faculty} ({p.subjectCode})</p>
+                  <p className="font-bold text-sm text-slate-800 truncate">{p.subjectName}</p>
+                  <p className="text-[11px] text-slate-500 mt-0.5">{p.faculty} • <span className="font-mono">{p.subjectCode}</span></p>
                 </div>
-                <div className="pt-2 border-t border-gray-200/60 flex items-center justify-between text-xs font-semibold">
-                  <span className="text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" /> {p.presentCount} Present
+
+                {/* Progress bar */}
+                <div className="space-y-1">
+                  <div className="flex justify-between text-[11px] font-semibold text-slate-600">
+                    <span>Attendance Rate</span>
+                    <span className="font-bold text-[#0090e7]">{p.attendancePercentage}%</span>
+                  </div>
+                  <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-[#0090e7] to-emerald-500 rounded-full transition-all duration-500"
+                      style={{ width: `${Math.min(100, Math.max(0, p.attendancePercentage))}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between text-xs font-bold">
+                  <span className="text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-md flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" /> {p.presentCount} Present
                   </span>
-                  <span className="text-rose-700 bg-rose-100 px-2 py-0.5 rounded-md flex items-center gap-1">
-                    <XCircle className="w-3 h-3" /> {p.absentCount} Absent
+                  <span className="text-rose-700 bg-rose-100/80 px-2 py-0.5 rounded-md flex items-center gap-1">
+                    <XCircle className="w-3.5 h-3.5" /> {p.absentCount} Absent
                   </span>
-                  <span className="font-black text-gray-800">{p.attendancePercentage}%</span>
                 </div>
               </div>
             ))}
@@ -171,44 +274,50 @@ export default function AdminDashboard() {
         )}
       </div>
 
-      {/* Quick Action Navigation Grid */}
+      {/* ── Quick Action Command Cards ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Link
           to="/admin/attendance"
-          className="p-5 rounded-3xl bg-white border border-gray-200 hover:border-blue-400 hover:shadow-lg transition space-y-2 group"
+          className="p-6 rounded-[24px] bg-white border border-slate-200/80 hover:border-[#0090e7] hover:shadow-[0_12px_36px_rgba(0,144,231,0.14)] transition-all space-y-3 group"
         >
-          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 transition">
-            <Users className="w-5 h-5" />
+          <div className="w-12 h-12 rounded-2xl bg-[#0090e7]/10 text-[#0090e7] flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+            <Users className="w-6 h-6" />
           </div>
-          <h3 className="font-bold text-sm text-gray-900">Period-wise Report</h3>
-          <p className="text-xs text-gray-500 leading-relaxed">
-            Expand any period to view individual present and absent student roll numbers and override statuses.
+          <h3 className="font-extrabold text-base text-slate-800 group-hover:text-[#0090e7] transition-colors">
+            Period-wise Attendance
+          </h3>
+          <p className="text-xs text-slate-500 leading-relaxed">
+            Expand any lecture period to view individual student photos, verified roll numbers, and manual override controls.
           </p>
         </Link>
 
         <Link
           to="/admin/timetable"
-          className="p-5 rounded-3xl bg-white border border-gray-200 hover:border-indigo-400 hover:shadow-lg transition space-y-2 group"
+          className="p-6 rounded-[24px] bg-white border border-slate-200/80 hover:border-indigo-400 hover:shadow-[0_12px_36px_rgba(99,102,241,0.14)] transition-all space-y-3 group"
         >
-          <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:scale-110 transition">
-            <Calendar className="w-5 h-5" />
+          <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+            <Calendar className="w-6 h-6" />
           </div>
-          <h3 className="font-bold text-sm text-gray-900">Configure Full Timetable</h3>
-          <p className="text-xs text-gray-500 leading-relaxed">
-            Interactive 6-day × 6-period weekly grid. Click any slot to change subjects, faculty, and scan timing windows.
+          <h3 className="font-extrabold text-base text-slate-800 group-hover:text-indigo-600 transition-colors">
+            Weekly Master Timetable
+          </h3>
+          <p className="text-xs text-slate-500 leading-relaxed">
+            Interactive 6-day × 6-period academic grid. Configure faculty assignments, subject codes, and scan windows.
           </p>
         </Link>
 
         <Link
           to="/admin/reports"
-          className="p-5 rounded-3xl bg-white border border-gray-200 hover:border-emerald-400 hover:shadow-lg transition space-y-2 group"
+          className="p-6 rounded-[24px] bg-white border border-slate-200/80 hover:border-emerald-400 hover:shadow-[0_12px_36px_rgba(16,185,129,0.14)] transition-all space-y-3 group"
         >
-          <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition">
-            <FileText className="w-5 h-5" />
+          <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+            <FileText className="w-6 h-6" />
           </div>
-          <h3 className="font-bold text-sm text-gray-900">Get All Records & Export</h3>
-          <p className="text-xs text-gray-500 leading-relaxed">
-            Search, filter by subject/status/date, and download complete biometric face attendance logs in Excel (CSV).
+          <h3 className="font-extrabold text-base text-slate-800 group-hover:text-emerald-600 transition-colors">
+            Biometric Logs & Export
+          </h3>
+          <p className="text-xs text-slate-500 leading-relaxed">
+            Audit-ready facial verification logs. Filter by student, subject or date, and export full Excel reports.
           </p>
         </Link>
       </div>

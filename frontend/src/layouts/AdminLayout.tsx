@@ -48,7 +48,7 @@ export default function AdminLayout() {
       >
         {/* Logo */}
         <div className="flex items-center gap-3 px-4 py-5 border-b border-white/10">
-          <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/20">
+          <div className="w-9 h-9 rounded-xl bg-[#0090e7] flex items-center justify-center flex-shrink-0 shadow-lg shadow-sky-500/25">
             <Scan className="w-5 h-5 text-white" />
           </div>
           <AnimatePresence>
@@ -60,7 +60,7 @@ export default function AdminLayout() {
                 className="leading-none"
               >
                 <span className="font-black text-white text-base tracking-tight block">FaceAttend</span>
-                <span className="text-[10px] text-blue-400 font-medium">MR University Admin</span>
+                <span className="text-[10px] text-sky-400 font-medium">MR University Admin</span>
               </motion.div>
             )}
           </AnimatePresence>
@@ -80,7 +80,7 @@ export default function AdminLayout() {
                 className={clsx(
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all duration-150',
                   active
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-600/25'
+                    ? 'bg-[#0090e7] text-white shadow-md shadow-sky-500/30'
                     : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
                 )}
               >
@@ -114,7 +114,7 @@ export default function AdminLayout() {
         <header className="h-14 flex items-center justify-between px-4 sm:px-6 bg-white border-b border-gray-200 flex-shrink-0 z-10 shadow-xs">
           <div className="flex items-center gap-2.5">
             {/* Mobile Brand Icon */}
-            <div className="md:hidden w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white">
+            <div className="md:hidden w-8 h-8 rounded-lg bg-[#0090e7] flex items-center justify-center text-white">
               <Scan className="w-4 h-4" />
             </div>
             <div>
@@ -132,7 +132,7 @@ export default function AdminLayout() {
                 onClick={() => setProfileOpen(o => !o)}
                 className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-gray-100 transition"
               >
-                <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-black shadow-xs">
+                <div className="w-7 h-7 rounded-full bg-[#0090e7] flex items-center justify-center text-white text-xs font-black shadow-xs">
                   A
                 </div>
                 <span className="text-xs font-bold text-gray-800 hidden sm:inline">Admin</span>

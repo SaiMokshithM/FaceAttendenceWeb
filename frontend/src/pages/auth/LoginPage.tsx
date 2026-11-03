@@ -10,9 +10,6 @@ import {
   GraduationCap,
   Shield,
   ScanFace,
-  Sparkles,
-  Building2,
-  CheckCircle2,
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 
@@ -190,14 +187,65 @@ function CampusSkyline() {
   )
 }
 
+/* ─── Social / Institutional SSO Login Icons ─── */
+function SocialLoginButtons() {
+  return (
+    <div className="flex items-center justify-center gap-4 my-2">
+      <button
+        type="button"
+        title="Institutional Google Workspace"
+        className="w-14 h-10 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-center hover:bg-slate-100 hover:border-slate-300 transition-all shadow-sm active:scale-95"
+      >
+        <svg className="w-4 h-4" viewBox="0 0 24 24">
+          <path
+            fill="#4285F4"
+            d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.87c2.27-2.09 3.675-5.17 3.675-9.15z"
+          />
+          <path
+            fill="#34A853"
+            d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.87-3.05c-1.08.72-2.45 1.16-4.06 1.16-3.13 0-5.78-2.11-6.73-4.96H1.28v3.15C3.26 21.36 7.34 24 12 24z"
+          />
+          <path
+            fill="#FBBC05"
+            d="M5.27 14.24c-.25-.72-.39-1.49-.39-2.24s.14-1.52.39-2.24V6.61H1.28C.47 8.24 0 10.06 0 12s.47 3.76 1.28 5.39l3.99-3.15z"
+          />
+          <path
+            fill="#EA4335"
+            d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.28 6.61l3.99 3.15c.95-2.85 3.6-4.96 6.73-4.96z"
+          />
+        </svg>
+      </button>
+
+      <button
+        type="button"
+        title="University Portal SSO"
+        className="w-14 h-10 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-center hover:bg-slate-100 hover:border-slate-300 transition-all shadow-sm active:scale-95"
+      >
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="#1877F2">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+        </svg>
+      </button>
+
+      <button
+        type="button"
+        title="Apple ID"
+        className="w-14 h-10 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-center hover:bg-slate-100 hover:border-slate-300 transition-all shadow-sm active:scale-95"
+      >
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="#000000">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.38c.62-.75 1.04-1.8 0.93-2.85-.9.04-1.98.6-2.61 1.34-.56.64-1.05 1.71-.92 2.73 1 .08 2.01-.51 2.6-1.22z" />
+        </svg>
+      </button>
+    </div>
+  )
+}
+
 export default function LoginPage() {
   const [roleMode, setRoleMode] = useState<'STUDENT' | 'ADMIN'>('STUDENT')
-  const [email, setEmail]       = useState('26teu06530@faceattend.local')
-  const [password, setPassword] = useState('26TEU06530')
+  const [email, setEmail]       = useState('')
+  const [password, setPassword] = useState('')
   const [showPwd, setShowPwd]   = useState(false)
   const [error, setError]       = useState('')
   const [loading, setLoading]   = useState(false)
-  const [showDemoTip, setShowDemoTip] = useState(false)
   const { login, user }         = useAuth()
   const navigate                = useNavigate()
 
@@ -209,13 +257,6 @@ export default function LoginPage() {
   const handleRoleChange = (role: 'STUDENT' | 'ADMIN') => {
     setRoleMode(role)
     setError('')
-    if (role === 'STUDENT') {
-      setEmail('26teu06530@faceattend.local')
-      setPassword('26TEU06530')
-    } else {
-      setEmail('admin@faceattend.com')
-      setPassword('AdminPassword@2026')
-    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -242,80 +283,31 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-[#0090e7] flex items-center justify-center p-3 sm:p-6 md:p-8 relative overflow-hidden font-sans selection:bg-white selection:text-[#0090e7]">
-      {/* Decorative Overlapping Circle Corner Motifs (Reference-style) */}
+      {/* Decorative Overlapping Circle Corner Motifs */}
       <CornerGeometric position="top-left" />
       <CornerGeometric position="bottom-right" />
 
-      {/* Top Floating Institutional Bar */}
+      {/* Top Floating Institutional Badge */}
       <header className="absolute top-3 left-4 right-4 z-20 flex items-center justify-between pointer-events-auto">
         <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-semibold border border-white/30 shadow-sm">
           <ScanFace className="w-4 h-4 text-white" />
           <span className="hidden sm:inline">Malla Reddy (MR) University • FaceAttend Portal</span>
           <span className="sm:hidden">FaceAttend AI</span>
         </div>
-
-        {/* 1-Click Demo Accounts Pill */}
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => setShowDemoTip(prev => !prev)}
-            className="px-3.5 py-1.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs font-bold border border-white/30 transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-            <span>1-Tap Demo</span>
-            <span className="text-[10px] bg-white text-[#0090e7] px-1.5 py-0.2 rounded-full font-extrabold">2</span>
-          </button>
-
-          <AnimatePresence>
-            {showDemoTip && (
-              <motion.div
-                initial={{ opacity: 0, y: -6, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -6, scale: 0.95 }}
-                className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-100 p-3 z-50 text-slate-700"
-              >
-                <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-                  Select Demo Identity
-                </div>
-                <div className="space-y-1.5">
-                  <button
-                    type="button"
-                    onClick={() => { handleRoleChange('STUDENT'); setShowDemoTip(false); }}
-                    className="w-full text-left px-3 py-2 rounded-xl bg-blue-50 hover:bg-blue-100/80 border border-blue-100 transition-colors"
-                  >
-                    <div className="text-xs font-bold text-[#0090e7] flex items-center gap-1.5">
-                      <GraduationCap className="w-3.5 h-3.5" />
-                      <span>Student Account (CSM Sec-F)</span>
-                    </div>
-                    <div className="text-[10px] text-slate-500 font-mono mt-0.5">26teu06530@faceattend.local</div>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => { handleRoleChange('ADMIN'); setShowDemoTip(false); }}
-                    className="w-full text-left px-3 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200/60 transition-colors"
-                  >
-                    <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                      <Shield className="w-3.5 h-3.5 text-indigo-600" />
-                      <span>Faculty / Admin Account</span>
-                    </div>
-                    <div className="text-[10px] text-slate-500 font-mono mt-0.5">admin@faceattend.com</div>
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+        <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-[11px] text-white/90 border border-white/20">
+          <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
+          <span>Biometric System Online</span>
         </div>
       </header>
 
-      {/* Main Dual-Panel Card (Reference Layout Structure) */}
+      {/* Main Dual-Panel Card */}
       <motion.div
         initial={{ opacity: 0, scale: 0.97, y: 12 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
         className="relative z-10 w-full max-w-[960px] bg-white rounded-[28px] sm:rounded-[32px] shadow-[0_24px_70px_rgba(0,35,80,0.32)] overflow-hidden grid grid-cols-1 md:grid-cols-2 min-h-[560px]"
       >
-        {/* ─── LEFT PANEL: FaceAttend & University AI Brand Hero (Reference Style) ─── */}
+        {/* ─── LEFT PANEL: FaceAttend & University AI Brand Hero ─── */}
         <div className="relative min-h-[280px] md:min-h-full flex flex-col justify-between p-6 sm:p-8 text-center overflow-hidden bg-slate-900 select-none">
           {/* High-Tech Campus & Biometric Photography Background */}
           <div
@@ -339,7 +331,7 @@ export default function LoginPage() {
               <ScanFace className="w-6 h-6 text-white" />
             </div>
 
-            {/* Script Elegance Header (Reference Inspiration) */}
+            {/* Script Elegance Header */}
             <h2
               className="text-white text-3xl sm:text-4xl md:text-[44px] font-normal tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)] font-script"
               style={{ fontFamily: "'Dancing Script', cursive" }}
@@ -365,9 +357,9 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* ─── RIGHT PANEL: Authentication Form (Reference Style) ─── */}
+        {/* ─── RIGHT PANEL: Authentication Form ─── */}
         <div className="relative bg-white flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12">
-          {/* Top-Right Decorative Radar Vector (Reference Flight Trail Equivalent) */}
+          {/* Top-Right Decorative Radar Vector */}
           <BiometricRadarTrail />
 
           {/* Form Content */}
@@ -443,7 +435,7 @@ export default function LoginPage() {
                     spellCheck={false}
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    placeholder={roleMode === 'STUDENT' ? '26teu06530@faceattend.local' : 'admin@faceattend.com'}
+                    placeholder={roleMode === 'STUDENT' ? 'e.g. 26teu06530@faceattend.local' : 'e.g. admin@faceattend.com'}
                     required
                     className="w-full bg-transparent text-xs sm:text-sm text-slate-700 placeholder:text-slate-300 focus:outline-none font-medium"
                   />
@@ -464,7 +456,7 @@ export default function LoginPage() {
                     spellCheck={false}
                     value={password}
                     onChange={e => setPassword(e.target.value)}
-                    placeholder="••••••••••••"
+                    placeholder="Enter your password"
                     required
                     className="w-full bg-transparent text-xs sm:text-sm text-slate-700 placeholder:text-slate-300 focus:outline-none font-medium"
                   />
@@ -513,7 +505,7 @@ export default function LoginPage() {
             </form>
 
             {/* OR Divider */}
-            <div className="flex items-center justify-center my-3.5">
+            <div className="flex items-center justify-center my-4">
               <div className="h-[1px] bg-slate-200 flex-1 max-w-[60px]" />
               <span className="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                 OR
@@ -521,28 +513,8 @@ export default function LoginPage() {
               <div className="h-[1px] bg-slate-200 flex-1 max-w-[60px]" />
             </div>
 
-            {/* Quick Access Single Sign-On / Identity Pills */}
-            <div className="flex items-center justify-center gap-3 my-2">
-              <button
-                type="button"
-                onClick={() => handleRoleChange('STUDENT')}
-                title="Fill Student Credentials"
-                className="px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-[11px] font-semibold text-slate-700 flex items-center gap-1.5 transition-all active:scale-95 shadow-sm"
-              >
-                <GraduationCap className="w-3.5 h-3.5 text-[#0090e7]" />
-                <span>Student</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleRoleChange('ADMIN')}
-                title="Fill Faculty Admin Credentials"
-                className="px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-[11px] font-semibold text-slate-700 flex items-center gap-1.5 transition-all active:scale-95 shadow-sm"
-              >
-                <Shield className="w-3.5 h-3.5 text-indigo-600" />
-                <span>Faculty Admin</span>
-              </button>
-            </div>
+            {/* Single Sign-On Identity Options (Google, University SSO, Apple) */}
+            <SocialLoginButtons />
 
             {/* Don't have account? Register Now */}
             <div className="text-center mt-3 text-xs text-slate-400">
@@ -559,7 +531,7 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Academic Campus Skyline Silhouette (Reference Style) */}
+          {/* Academic Campus Skyline Silhouette */}
           <CampusSkyline />
         </div>
       </motion.div>
