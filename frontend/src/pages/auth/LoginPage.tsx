@@ -10,11 +10,7 @@ import {
   EyeOff,
   AlertCircle,
   Fingerprint,
-  Cpu,
   ChevronRight,
-  ShieldCheck,
-  CheckCircle2,
-  Building2,
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 
@@ -31,13 +27,6 @@ export default function LoginPage() {
   // Redirect if already authenticated
   if (user) {
     navigate(user.role === 'ADMIN' ? '/admin' : '/student', { replace: true })
-  }
-
-  const handleQuickPreset = (targetRole: 'STUDENT' | 'ADMIN', userEmail: string, userPass: string) => {
-    setRoleMode(targetRole)
-    setEmail(userEmail)
-    setPassword(userPass)
-    setError('')
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -197,7 +186,7 @@ export default function LoginPage() {
                     Security Passcode
                   </label>
                   <span className="text-[10px] text-slate-500 font-mono">
-                    {roleMode === 'STUDENT' ? 'Default: Roll No' : 'Admin Pass'}
+                    Protected
                   </span>
                 </div>
                 <div className="relative">
@@ -211,7 +200,7 @@ export default function LoginPage() {
                     spellCheck={false}
                     value={password}
                     onChange={e => setPassword(e.target.value)}
-                    placeholder={roleMode === 'STUDENT' ? 'e.g. 26TEU06530' : '••••••••••••'}
+                    placeholder="••••••••••••"
                     required
                     className="w-full pl-10 pr-11 py-3 rounded-xl bg-slate-950/60 border border-slate-800 text-white placeholder:text-slate-600 text-xs sm:text-sm font-mono focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-inner"
                   />
@@ -260,49 +249,8 @@ export default function LoginPage() {
               </button>
             </form>
 
-            {/* Executive Quick-Auth Drawer (Refined & Professional) */}
-            <div className="mt-6 pt-5 border-t border-slate-800/80">
-              <div className="flex items-center justify-between mb-2.5">
-                <span className="text-[11px] font-semibold text-slate-400 flex items-center gap-1.5 uppercase tracking-wider">
-                  <Cpu className="w-3.5 h-3.5 text-blue-400" />
-                  <span>Institutional Presets</span>
-                </span>
-                <span className="text-[10px] text-slate-500 font-mono">1-Tap Fill</span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => handleQuickPreset('ADMIN', 'admin@faceattend.com', 'AdminPassword@2026')}
-                  className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 hover:border-slate-700 text-left transition-all active:scale-95 group"
-                >
-                  <div className="flex items-center justify-between text-slate-300 group-hover:text-white">
-                    <span className="font-bold text-[11px]">Faculty Admin</span>
-                    <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
-                  </div>
-                  <p className="text-[10px] text-slate-500 font-mono mt-0.5 truncate">
-                    admin@faceattend.com
-                  </p>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => handleQuickPreset('STUDENT', '26teu06530@faceattend.local', '26TEU06530')}
-                  className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 hover:border-slate-700 text-left transition-all active:scale-95 group"
-                >
-                  <div className="flex items-center justify-between text-slate-300 group-hover:text-white">
-                    <span className="font-bold text-[11px]">Enrolled Student</span>
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  </div>
-                  <p className="text-[10px] text-slate-500 font-mono mt-0.5 truncate">
-                    26TEU06530 (CSM-F)
-                  </p>
-                </button>
-              </div>
-            </div>
-
             {/* Cryptography Footer Badge */}
-            <div className="mt-5 flex items-center justify-center gap-3 text-[10px] text-slate-500 font-mono">
+            <div className="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-center gap-3 text-[10px] text-slate-500 font-mono">
               <span className="flex items-center gap-1">
                 <Lock className="w-3 h-3 text-slate-600" /> AES-256 Hashes
               </span>
