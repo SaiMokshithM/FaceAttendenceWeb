@@ -22,8 +22,10 @@ export default function LoginPage() {
     e.preventDefault()
     setError('')
     setLoading(true)
+    const cleanEmail = email.trim().toLowerCase()
+    const cleanPassword = password.trim()
     try {
-      await login(email, password)
+      await login(cleanEmail, cleanPassword)
       const stored = JSON.parse(localStorage.getItem('user') || '{}')
       navigate(stored.role === 'ADMIN' ? '/admin' : '/student', { replace: true })
     } catch (err: any) {
@@ -70,7 +72,11 @@ export default function LoginPage() {
                 Email address
               </label>
               <input
-                type="email"
+                type="text"
+                inputMode="email"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="admin@faceattend.com"
@@ -88,6 +94,9 @@ export default function LoginPage() {
               <div className="relative">
                 <input
                   type={showPwd ? 'text' : 'password'}
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   placeholder="••••••••"
@@ -101,6 +110,35 @@ export default function LoginPage() {
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition-colors"
                 >
                   {showPwd ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            {/* Quick 1-Tap Fill for Mobile Phones */}
+            <div className="pt-1">
+              <p className="text-[11px] text-white/40 mb-1.5 font-medium">Quick 1-Tap Demo Credentials:</p>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmail('admin@faceattend.com')
+                    setPassword('AdminPassword@2026')
+                    setError('')
+                  }}
+                  className="px-2.5 py-2 rounded-xl bg-blue-500/20 hover:bg-blue-500/30 border border-blue-400/30 text-blue-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition active:scale-95"
+                >
+                  <span>🛡️ Admin Fill</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmail('26teu06530@faceattend.local')
+                    setPassword('26TEU06530')
+                    setError('')
+                  }}
+                  className="px-2.5 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/30 text-emerald-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition active:scale-95"
+                >
+                  <span>🎓 Student Fill</span>
                 </button>
               </div>
             </div>
