@@ -98,6 +98,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def root():
+    return {
+        "status": "online",
+        "service": "FaceAttend AI Biometric Attendance API",
+        "version": "1.0.0",
+        "enrolledStudents": len(CACHED_ROLLS),
+        "detector": "YuNet (2023mar)",
+        "recognizer": "SFace (128-dim, 2021dec)",
+        "docsUrl": "/docs"
+    }
+
+@app.get("/health")
+def health():
+    return {"status": "healthy", "timestamp": str(datetime.datetime.now())}
+
 def verify_token(authorization: Optional[str] = Header(None)):
     if not authorization or not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Missing or invalid token")
