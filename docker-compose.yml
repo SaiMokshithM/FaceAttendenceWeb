@@ -1,0 +1,72 @@
+version: '3.8'
+
+# ====================================================================
+# FaceAttend — Local Development Stack
+# DB: pgAdmin local PostgreSQL  (postgres / root / port 5433)
+# ====================================================================
+
+services:
+
+  # ── AI Microservice (Python / FastAPI / InsightFace) ──────────────
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: faceattend-ai
+    environment:
+      - PORT=8000
+      - AI_SERVICE_API_KEY=faceattend_internal_ai_secret_key_2026
+      - FACE_SIMILARITY_THRESHOLD=0.45
+      - FACE_QUALITY_MIN_SIZE=112
+      - LIVENESS_THRESHOLD=0.50
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ── Spring Boot Backend ───────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: faceattend-backend
+    depends_on:
+      ai-service:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      # ── Local pgAdmin PostgreSQL ──
+      - DB_URL=jdbc:postgresql://host.docker.internal:5433/faceattend
+      - DB_USER=postgres
+      - DB_PASSWORD=root
+      # ── JWT ──
+      - JWT_SECRET=404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      - JWT_EXPIRATION_MS=900000
+      - JWT_REFRESH_EXPIRATION_MS=604800000
+      # ── Biometric ──
+      - BIOMETRIC_ENCRYPTION_KEY=d7a98b472e11894dcb40f6f7bc2998a14b51820468f76023d8c11e2fbc0300fa
+      # ── AI Service ──
+      - AI_SERVICE_URL=http://ai-service:8000
+      - AI_SERVICE_API_KEY=faceattend_internal_ai_secret_key_2026
+      # ── CORS ──
+      - ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
+    ports:
+      - "8080:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # lets container reach host pgAdmin
+
+  # ── React Frontend ────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: faceattend-frontend
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8080/api
+    ports:
+      - "5173:80"
