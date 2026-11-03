@@ -21,7 +21,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        script: ['"Dancing Script"', 'cursive'],
       },
       animation: {
         'fade-in':    'fadeIn 0.3s ease-out',
